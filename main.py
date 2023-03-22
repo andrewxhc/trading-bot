@@ -2,15 +2,13 @@ import alpaca_trade_api as tradeapi
 # from fear_greed_index import CNNFearAndGreedIndex
 import requests
 import ast
-from pandas import Timestamp
 from dateutil import parser
-import datetime
 
 
 class Bot:
     def __init__(self):
-        self.key = "PK692E83Q4X2KRCUGN3A"
-        self.secret = "9KOKEm1duXyj3uXDCZjoEnIHzbcQCFF9tEtgpdEz"
+        self.key = "PKB19DQV3BAFMQPAO0BF"
+        self.secret = "YCojJE8jemI7pbCepBNzyX4kkdj4JW90a91awfeL"
         self.alpaca_endpoint = "https://paper-api.alpaca.markets"
         self.api = tradeapi.REST(self.key, self.secret, self.alpaca_endpoint)
         self.symbol = "SPY"
@@ -65,7 +63,9 @@ class Bot:
         return {"equity": account.equity, "cash": account.cash, "long": account.long_market_value, "short": account.short_market_value}
 
     def last_order_time(self):
-        return self.api.list_orders('all', 1)[0].submitted_at
+        if len(self.api.list_orders('all', 1)) != 0:
+            return self.api.list_orders('all', 1)[0].submitted_at
+        return None
 
     def cancel_orders(self):
         print(f'Cancelling all previous orders')
@@ -103,6 +103,8 @@ class Index:
 def positions_updated(index, trade_bot):
     fg_time = parser.parse(index.last_update[1])
     order_time = trade_bot.last_order_time()
+    if order_time is None:
+        return False
     return order_time >= fg_time
 
 
