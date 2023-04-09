@@ -7,8 +7,8 @@ from dateutil import parser
 
 class Bot:
     def __init__(self):
-        self.key = "PKB19DQV3BAFMQPAO0BF"
-        self.secret = "YCojJE8jemI7pbCepBNzyX4kkdj4JW90a91awfeL"
+        self.key = "PK9KW2YN1BICZHQXKXJT"
+        self.secret = "huaan9n35M9yGtCxNPbEJwtRCaXdVJWVKSX6mdh2"
         self.alpaca_endpoint = "https://paper-api.alpaca.markets"
         self.api = tradeapi.REST(self.key, self.secret, self.alpaca_endpoint)
         self.symbol = "SPY"
